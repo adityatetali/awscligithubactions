@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  aws-cli-execution-job:
+    name: aws-cli
+    runs-on: ubuntu-latest
+
+# Steps represent a sequence of tasks that will be executed as part of the jobs 
+  steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v3
+
+  - name: Configure AWS Credentials
+    uses: aws-actions/configure-aws-credentials@v2
+    with:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: us-east-1
+
+  - name: Run AWS CLI Command
+    run: |
+      aws s3 ls
+
